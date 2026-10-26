@@ -1,0 +1,21 @@
+product-name =  "tauri-leptos-example"
+version = "0.1.9"
+identifier = "com.tauri-leptos-example.dev"
+
+[build]
+dev-url = "http://127.0.0.1:8080"
+before-dev-command = { cwd = "../src-ui", script = "trunk serve" }
+before-build-command = { cwd = "../src-ui", script = "trunk build" }
+frontend-dist = "../src-ui/dist"
+
+[bundle]
+active = true
+icon = ["icons/icon.ico"]
+
+[app]
+with-global-shortcut = true
+
+[[app.windows]]
+title = "Tauri Leptos Example"
+width = 800
+height = 600

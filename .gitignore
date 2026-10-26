@@ -1,0 +1,18 @@
+
+# Rust
+target/
+**/target/
+
+# Trunk
+dist/
+**/dist/
+
+# Tauri
+**/gen/schemas/
+
+# Editor
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
