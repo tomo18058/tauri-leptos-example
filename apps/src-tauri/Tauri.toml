@@ -13,7 +13,7 @@ active = true
 icon = ["icons/icon.ico"]
 
 [app]
-with-global-shortcut = true
+with-global-tauri = true
 
 [[app.windows]]
 title = "Tauri Leptos Example"
