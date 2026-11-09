@@ -29,6 +29,7 @@ fn main() {
 fn App() -> impl IntoView {
     let (name, set_name) = signal(String::new());
     let (message, set_message) = signal(String::new());
+    let (system_info, set_system_info) = signal(String::new());
 
     let greet = move |_| {
         let name = name.get();
@@ -61,6 +62,24 @@ fn App() -> impl IntoView {
         });
     };
 
+    // システム情報取得機能
+    let get_info = move |_| {
+        leptos::task::spawn_local(async move {
+            match invoke_tauri("get_system_info", JsValue::NULL).await {
+                Ok(result) => {
+                    set_system_info.set(
+                        result.as_string().unwrap_or_default()
+                    );
+                }
+                Err(_) => {
+                    set_message.set(
+                        "システム情報の取得に失敗しました".into()
+                    );
+                }
+            }
+        });
+    };
+
     view! {
         <div style="text-align: center; padding: 40px;">
             <h1>"Tauri + Leptos"</h1>
@@ -80,6 +99,17 @@ fn App() -> impl IntoView {
             </button>
 
             <p>{move || message.get()}</p>
+
+            <hr/>
+
+            <h2>"windowsシステム情報"</h2>
+            <button on:click=get_info>
+                "システム情報を取得"
+            </button>
+
+            <pre style="white-space: pre-wrap; text-align: left; margin: 20px auto; max-width: 600px;">
+                {move || system_info.get()}
+            </pre>
         </div>
     }
 }
